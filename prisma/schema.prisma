@@ -29,6 +29,16 @@ model Account {
   @@unique([provider, providerAccountId])
 }
 
+model Restaurant {
+  id                  String     @id @default(auto()) @map("_id") @db.ObjectId
+  name                String
+  imageUrl            String
+  deliveryFee         Float
+  deliveryTimeMinutes Int
+  categories          Category[]
+  products            Product[]
+}
+
 model User {
   id             String    @id @default(auto()) @map("_id") @db.ObjectId
   name           String?
@@ -44,29 +54,31 @@ model User {
 }
 
 model Category {
-  id        String    @id @default(auto()) @map("_id") @db.ObjectId
-  name      String
-  image     String
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  Product   Product[]
+  id           String     @id @default(auto()) @map("_id") @db.ObjectId
+  name         String
+  image        String
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  Product      Product[]
+  Restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
+  restaurantId String     @db.ObjectId
 }
 
 model Product {
-  id          String        @id @default(auto()) @map("_id") @db.ObjectId
-  name        String
-  description String?
-  price       Float
-  image       String
-  color       String?
-  qtd         Int?          @default(1)
-  status      Boolean       @default(true)
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
-  category    Category      @relation(fields: [categoryId], references: [id])
-  categoryId  String        @db.ObjectId
-  star        Boolean       @default(false)
-  CartProduct CartProduct[]
+  id                 String        @id @default(auto()) @map("_id") @db.ObjectId
+  name               String
+  description        String
+  price              Float
+  image              String
+  discountPercentage Int
+  createdAt          DateTime      @default(now())
+  updatedAt          DateTime      @updatedAt
+  category           Category      @relation(fields: [categoryId], references: [id])
+  categoryId         String        @db.ObjectId
+  star               Boolean       @default(false)
+  CartProduct        CartProduct[]
+  Restaurant         Restaurant    @relation(fields: [restaurantId], references: [id])
+  restaurantId       String        @db.ObjectId
 }
 
 model Cart {
