@@ -1,4 +1,4 @@
-export interface GenericModal {
+export interface TypesGenericModal {
     title: string,
     description: string,
     children: React.ReactNode,

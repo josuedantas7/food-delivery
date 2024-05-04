@@ -14,7 +14,7 @@ import {
 
 import { IoMdAlert } from "react-icons/io";
 
-import { GenericModal as TypesGenericModal } from './TypesGenericModal'
+import { TypesGenericModal } from './TypesGenericModal'
 
 export const GenericModal = ({children, textButtonCancel, textButtonAction, defaultModal=false, title, description, typeModal} : TypesGenericModal) => {
   return (
